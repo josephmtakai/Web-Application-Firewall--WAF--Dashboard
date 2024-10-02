@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAF Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="api.php"></script>
+    <script src="app.js"></script>
+    <script src="config.php"></script>
+    <script src="SQL Schema.sql"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Web Application Firewall Dashboard</h1>
+    <div id="app">
+        <h2>Firewall Rules</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rule Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="rule in rules" :key="rule.id">
+                    <td>{{ rule.rule_name }}</td>
+                    <td>{{ rule.rule_description }}</td>
+                    <td>{{ rule.action }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Add New Rule</h2>
+        <form @submit.prevent="addRule">
+            <input type="text" v-model="newRuleName" placeholder="Rule Name" required>
+            <textarea v-model="newRuleDescription" placeholder="Description" required></textarea>
+            <select v-model="newRuleAction">
+                <option value="allow">Allow</option>
+                <option value="block">Block</option>
+            </select>
+            <button type="submit">Add Rule</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
